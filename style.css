@@ -45,11 +45,6 @@ button{
     cursor: pointer;
 }
 
-#message{
-    margin-top: 15px;
-    color: red;
-    font-weight: bold;
-}
 
 .cell{
     width: 50px;
@@ -62,4 +57,26 @@ button{
     border: 1px solid black;
 
     outline: none;
+}
+
+#message{
+    color: red;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+#clearBtn{
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+h1{
+    text-align: center;
+    margin: 20px;
+    font-family: Arial, sans-serif;
 }

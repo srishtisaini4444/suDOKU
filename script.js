@@ -1,10 +1,13 @@
 let board = document.getElementById("board");
 
-let boardArray = [];
+let message = document.getElementById("message");
+
+let clearBtn = document.getElementById("clearBtn");
+
+let boardArray = Array.from({ length: 9 }, () => Array(9).fill(""));
 
 for(let row = 0; row < 9; row++)
 {
-    boardArray[row] = [];
 
     for(let col = 0; col < 9; col++)
 {
@@ -22,11 +25,19 @@ for(let row = 0; row < 9; row++)
 
 }
 
+clearBtn.addEventListener("click", clearBoard);
 
 
 function updateBoard(event)
 {
     let cell = event.target;
+
+    if(cell.value !== "" && !/^[1-9]$/.test(cell.value))
+{
+    cell.value = "";
+    return;
+}
+
     let row = cell.dataset.row;
     let col = cell.dataset.col;
 
@@ -47,6 +58,8 @@ function updateBoard(event)
 
 function checkBoard()
 {
+    message.innerText = "";
+
     checkRows();
     checkColumns();
     checkBoxes();
@@ -67,7 +80,7 @@ function checkRows(){
 
         if(values.includes(value))
         {
-              console.log("Duplicate Found");
+              message.innerText = " Duplicate Found!";
         }
         else
         {
@@ -95,7 +108,7 @@ function checkColumns()
 
             if(values.includes(value))
             {
-                console.log("Duplicate Found");
+                message.innerText = " Duplicate Found!";
             }
             else
             {
@@ -126,7 +139,7 @@ function checkBoxes()
 
                     if(values.includes(value))
                     {
-                        console.log("Duplicate Found");
+                        message.innerText = " Duplicate Found!";
                     }
                     else
                     {
@@ -136,4 +149,18 @@ function checkBoxes()
             }
         }
     }
+}
+
+function clearBoard()
+{
+    let cells = document.querySelectorAll(".cell");
+
+    cells.forEach(function(cell)
+    {
+        cell.value = "";
+    });
+
+    boardArray = Array.from({length: 9}, () => Array(9).fill(""));
+
+    message.innerText = "";
 }
