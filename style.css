@@ -6,7 +6,7 @@
 
 body{
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #f2f2f2;
+    background-color: #85a9d5;
 }
 
 .container{
@@ -23,7 +23,7 @@ h1{
 
 .subtitle{
     margin-bottom: 25px;
-    color: #666;
+    color: #363232;
 }
 
 #board{
@@ -39,10 +39,19 @@ h1{
 }
 
 button{
-    padding: 10px 20px;
-    margin: 5px;
-    font-size: 16px;
+    width: 150px;
+    padding: 12px;
+    margin: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover{
+    background-color: #3b8f3f;
 }
 
 
@@ -79,4 +88,10 @@ h1{
     text-align: center;
     margin: 20px;
     font-family: Arial, sans-serif;
+}
+
+.cell[readonly]{
+    background-color: #e6e6e6;
+    font-weight: bold;
+    color: black;
 }
