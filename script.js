@@ -6,6 +6,8 @@ let clearBtn = document.getElementById("clearBtn");
 
 let newGameBtn = document.getElementById("newGameBtn");
 
+let checkBtn = document.getElementById("checkBtn");
+
 let boardArray = Array.from({ length: 9 }, () => Array(9).fill(""));
 
 let puzzles = [
@@ -84,6 +86,8 @@ clearBtn.addEventListener("click", clearBoard);
 
 newGameBtn.addEventListener("click", newGame);
 
+checkBtn.addEventListener("click", checkBoard);
+
 
 function updateBoard(event)
 {
@@ -115,109 +119,120 @@ function updateBoard(event)
 
 function checkBoard()
 {
-    message.innerText = "";
+    let hasError =
+        checkRows() ||
+        checkColumns() ||
+        checkBoxes();
 
-    checkRows();
-    checkColumns();
-    checkBoxes();
-
+    if (hasError)
+    {
+        message.innerText = "❌ Duplicate Found!";
+    }
+    else
+    {
+        message.innerText = "✅ No duplicates. Good job.";
+    }
 }
 
-function checkRows(){
-    for(let row = 0; row < 9; row++)
+function checkRows()
+{
+    for (let row = 0; row < 9; row++)
     {
-    let values = [];
-    for(let col = 0; col < 9; col++)
-    {
-        let value = boardArray[row][col];
-        if(value == "")
+        let values = [];
+
+        for (let col = 0; col < 9; col++)
+        {
+            let value = boardArray[row][col];
+
+            if (value === "") continue;
+
+            if (values.includes(value))
             {
-            continue;
-        }
+                return true;
+            }
 
-        if(values.includes(value))
-        {
-              message.innerText = " Duplicate Found!";
-        }
-        else
-        {
-             values.push(value);
+            values.push(value);
         }
     }
-    }
-
+    return false;
 }
 
 function checkColumns()
 {
-    for(let col = 0; col < 9; col++)
+    for (let col = 0; col < 9; col++)
     {
         let values = [];
 
-        for(let row = 0; row < 9; row++)
+        for (let row = 0; row < 9; row++)
         {
             let value = boardArray[row][col];
 
-            if(value == "")
+            if (value === "") continue;
+
+            if (values.includes(value))
             {
-                continue;
+                return true;
             }
 
-            if(values.includes(value))
-            {
-                message.innerText = " Duplicate Found!";
-            }
-            else
-            {
-                values.push(value);
-            }
+            values.push(value);
         }
     }
+    return false;
 }
 
 function checkBoxes()
 {
-    for(let startRow = 0; startRow < 9; startRow += 3)
+    for (let startRow = 0; startRow < 9; startRow += 3)
     {
-        for(let startCol = 0; startCol < 9; startCol += 3)
+        for (let startCol = 0; startCol < 9; startCol += 3)
         {
             let values = [];
 
-            for(let row = startRow; row < startRow + 3; row++)
+            for (let row = startRow; row < startRow + 3; row++)
             {
-                for(let col = startCol; col < startCol + 3; col++)
+                for (let col = startCol; col < startCol + 3; col++)
                 {
                     let value = boardArray[row][col];
 
-                    if(value == "")
+                    if (value === "") continue;
+
+                    if (values.includes(value))
                     {
-                        continue;
+                        return true;
                     }
 
-                    if(values.includes(value))
-                    {
-                        message.innerText = " Duplicate Found!";
-                    }
-                    else
-                    {
-                        values.push(value);
-                    }
+                    values.push(value);
                 }
             }
         }
     }
+    return false;
 }
 
 function clearBoard()
 {
     let cells = document.querySelectorAll(".cell");
 
-    cells.forEach(function(cell)
+    cells.forEach((cell) =>
     {
-        cell.value = "";
+        if (!cell.readOnly)
+        {
+            cell.value = "";
+        }
     });
 
-    boardArray = Array.from({length: 9}, () => Array(9).fill(""));
+    for (let row = 0; row < 9; row++)
+    {
+        for (let col = 0; col < 9; col++)
+        {
+            let index = row * 9 + col;
+
+            if (!cells[index].readOnly)
+            {
+                boardArray[row][col] = "";
+            }
+        }
+    }
 
     message.innerText = "";
 }
